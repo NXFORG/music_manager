@@ -1,0 +1,39 @@
+* {
+    box-sizing: border-box;
+    font-family: 'Quicksand', sans-serif;
+}
+
+h1 {
+    text-align: center;
+}
+
+main {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+}
+
+main > section {
+    grid-column-start: 2;
+}
+
+#regLoginBtnContainer {
+    width: 40%;
+    margin-left: auto;
+    margin-right: auto;
+    display: flex;
+}
+
+#regLoginBtnContainer > button {
+    flex-basis: 50%;
+}
+
+.formTitle {
+    text-align: center;
+}
+
+form > input {
+    display: block;
+    width: 100%;
+    margin-bottom: 10px;
+    padding: 10px;
+}

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css" type="text/css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand&display=swap" rel="stylesheet">
+    <script defer src="script.js"></script>
+    <title>Login</title>
+</head>
+<body>
+    <h1>Welcome to the Register/Login Page</h1>
+    <section id="regLoginBtnContainer">
+        <button>Register</button>
+        <button>Login</button>
+    </section>
+    <h2 class="formTitle">Register</h2>
+    <h2 class="formTitle">Login</h2>
+    <main>
+        <section>
+            <form id="registerForm">
+                <input id="fnameEntry" name="fname" placeholder="First Name" required/>
+                <input id="lnameEntry" name="lname" placeholder="Last Name" required/>
+                <input id="emailEntry" name="email" placeholder="Email" type="email" required/>
+                <input id="passEntry" name="pass" placeholder="Password" type="password" required/>
+                <input id="passConfirmEntry" name="passConfirm" placeholder="Re-enter Password" type="password" required/>
+                <input id="submitRegForm" name="submit" type="submit"/>
+            </form>
+            <form id="loginForm">
+                <input id="emailLogin" name="emailLogin" placeholder="Email" type="email" required/>
+                <input id="passLogin" name="passLogin" placeholder="Password" type="password" required/>
+                <input id="submitLoginForm" name="submit" type="submit"/>
+            </form>
+        </section>
+    </main> 
+</body>
+</html>
