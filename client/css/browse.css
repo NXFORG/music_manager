@@ -1,0 +1,459 @@
+:root{
+    --red-gray: #1f1b1b;
+    --light-red-gray: #383232;
+    --dark-red: #753e39;
+}
+
+* {
+    font-family: 'Lato', sans-serif;
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+}
+
+nav {
+    background-color: var(--red-gray);
+    border-bottom: 20px solid var(--light-red-gray);
+    position: fixed;
+    top: 0;
+    width: 100%;
+}
+  
+nav > ul {
+    overflow: hidden;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+.navLink{
+    float:left;
+    padding-right: 30px;
+}
+  
+.navLink a{
+    display: block;
+    padding: 20px;
+    color: white;
+    text-decoration: none;
+}
+
+.navLink a:hover, .navLink a:active {
+    background-color: #fff;
+    transition: background-color 0.2s ease-in;
+    color: var(--red-gray);
+}
+
+#browseTab, #collTab, #manageTab, #searchContent {
+    display: none;
+}
+
+#enterForm {
+    height: 75vh;
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    background-color: lightgray;
+    margin-top: 60px;
+}
+
+#welcomeSection {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    height: 250px;
+}
+
+#welcomeSection > section {
+    padding: 20px;
+}
+
+#vinylImg {
+    width: 33vw;
+    height: 50vh;
+    overflow: hidden;
+}
+
+#vinylImg > img {
+    width: 50vw;
+    float: right;
+}
+
+#introText{
+    margin-top: 50px;
+    padding-left: 50px;
+    font-size: 1.5em;
+    width: 60%;
+}
+
+#findArtist {
+    height: 50vh;
+    background-color: rgba(255, 255, 255, 0.9);
+}
+
+form > * {
+    margin-left: 50px;
+}
+
+#searchQuery, #searchFormat, #searchType{
+    width: 40%;
+    padding: 10px;
+    display: block;
+}
+
+#searchFormat, #searchType {
+    margin-top: 10px;
+}
+
+#formSubmit{
+    display: block;
+    margin-top: 20px;
+    background-color: var(--dark-red);
+    color: #fff;
+    width: 40%;
+    font-size: 1.5em;
+    border: 2px solid var(--dark-red);
+    box-shadow: 2px 2px 5px grey;
+}
+
+#formSubmit:hover {
+    background-color: #fff;
+    color: var(--dark-red);
+    cursor: pointer;
+}
+
+#formSubmit:active {
+    background-color: darkred;
+    color: #fff;
+    cursor: pointer;
+}
+
+#resultsDisplay {
+   display: grid;
+   grid-template-columns: repeat(5, 1fr);
+}
+
+.albumListing {
+    display: flex;
+    box-shadow: 2px 2px 5px grey;
+    text-align: center;
+    aspect-ratio: 1;
+    margin: 10px;
+    justify-content: center;
+    align-items: center;
+}
+
+.artistListing > h4 {
+    text-align: center;
+}
+
+.artistListing {
+    box-shadow: 2px 2px 5px grey;
+    aspect-ratio: 1;
+    margin: 10px;
+}
+
+.btnContainer {
+    text-align: center;
+}
+
+.longerTextSize {
+    font-size: 0.7em;
+}
+
+.albumListing:hover {
+    background-color: #aaa;
+}
+
+.addButton, .detailsButton {
+    margin-top: 20px;
+    aspect-ratio: 1;
+    font-size: 1.5em;
+    color: #fff;
+    height: 2em;
+}
+
+.addButton {
+    border: 2px solid green;
+    background-color: green;
+    font-weight: bolder;
+}
+
+.detailsButton {
+    border: 2px solid steelblue;
+    background-color: steelblue;
+    margin-right: 20px;
+}
+
+.addButton:hover {
+    background-color: #fff;
+    color: green;
+}
+
+.addButton:active {
+    background-color: #aaa;
+    color: green;
+}
+
+.detailsButton:hover {
+    background-color: #fff;
+    color: steelblue;
+}
+
+.detailsButton:active {
+    background-color: #aaa;
+    color: steelblue;
+}
+
+#modalBtnContainer {
+    text-align: center;
+}
+
+#modalAdd {
+    margin-left: 0px;
+    margin-right: 20px;
+    aspect-ratio: unset;
+    font-size: 1.2em;
+}
+
+#modalView {
+    margin-right: 0;
+    aspect-ratio: unset;
+    font-size: 1.2em;
+}
+
+.detailsButton {
+    border: 2px solid steelblue;
+    background-color: steelblue;
+    margin-right: 20px;
+}
+
+.modal {
+    display: none; 
+    position: fixed; 
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%; 
+    height: 100%; 
+    overflow: auto; 
+    background-color: rgb(0,0,0); 
+    background-color: rgba(0,0,0,0.4);
+}
+  
+.modalBody{
+    background-color: #fefefe;
+    margin: 15% auto; 
+    padding: 20px;
+    border: 1px solid #888;
+    width: 50%; 
+}
+
+.modalBody > ul {
+    list-style: none;
+}
+  
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 2em;
+    font-weight: bold;
+}
+
+.close:hover, .close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.browsePageHeader {
+    background-color: var(--red-gray);
+    border-bottom: 20px solid var(--light-red-gray);
+    text-align: center;
+    color: #fff;
+    padding-top: 50px;
+    padding-bottom: 50px;
+}
+
+td > button {
+   background-color: var(--dark-red);
+   padding: 10px;
+   width: 100%;
+   border: 2px solid var(--dark-red);
+   color: #fff;
+}
+
+td > button:hover, td > button:active {
+    background-color: #fff;
+    color: var(--dark-red);
+}
+
+#toTop > button {
+    border: 2px solid var(--light-red-gray);
+    background-color: var(--light-red-gray);
+}
+
+#toTop > button:hover, #toTop > button:active{
+    color: var(--light-red-gray);
+    background-color: #fff;
+}
+
+
+#collHeader {
+    margin-top: 0;
+}
+
+#showCollection, #showManageCollection {
+    background-color: var(--red-gray);
+    color: #fff;
+    font-size: 1.5em;
+    width: 20%;
+    font-size: 1.5em;
+    border: 0;
+    border-bottom: 2px solid var(--red-gray);
+    cursor: pointer;
+}
+
+#showManageCollection {
+    width: 15%;
+}
+
+#showCollection:hover, #showManageCollection:hover {
+    cursor: pointer;
+    border-bottom: 2px solid var(--dark-red);
+    transition: border-bottom 0.5s ease-in;
+}
+
+#showCollection:active, #showManageCollection:active {
+    background-color: var(--light-red-gray);
+    color: #fff;
+    cursor: pointer;
+    border-bottom: solid 2px var(--dark-red);
+    transition: border-bottom 0.5s ease-in;
+}
+
+table {
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    table-layout: fixed;
+    border-collapse: collapse;
+    word-wrap: break-word;
+}
+
+tr {
+    border-bottom: 2px solid var(--light-red-gray);
+    border-left: 5px sold var(--red-gray);
+}
+
+td {
+    padding: 20px;
+}
+
+#collTableHeader {
+    background-color: var(--dark-red);
+}
+
+#showContainer {
+    display: none;
+    grid-template-columns: 1fr 1fr 1fr;
+}
+
+#albumDetails {
+    display: none;
+    padding: 20px;
+}
+
+#albumTrackList {
+    display: none;
+    margin-top: 50px;
+}
+
+#albumTitle{
+    font-size: 2em;
+}
+
+#albumArtists {
+    list-style: none;
+    padding: 0;
+}
+
+#notesContainer {
+    display: none;
+    margin-top: 50px;
+}
+
+#albumTracks > li > span{
+    color: var(--dark-red);
+    font-weight: bolder;
+    font-size: 1.1em;
+}
+
+#tableFilters {
+    display: none;
+}
+
+#manageHeader {
+    display: none;
+}
+
+#manageDisplay {
+    display: none;
+    grid-template-columns: 1fr 1fr 1fr;
+}
+
+#manageDisplay > section {
+    box-shadow: 2px 2px 5px grey;
+    margin: 10px;
+    padding-left: 10px;
+    aspect-ratio: 1;
+}
+
+#manageDisplay > section > h3, #showSong {
+    text-align: center;
+}
+
+#showSong {
+    vertical-align: middle;
+}
+
+#collStatistics > ul {
+    list-style: none;
+    line-height: 2em;
+}
+
+#collActions > button {
+    display: block;
+    background-color: var(--dark-red);
+    width: 50%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 20px;
+    padding: 10px;
+    border: 2px solid var(--dark-red);
+    color: #fff;
+}
+ 
+#collActions > button:hover, #collActions > button:active {
+     background-color: #fff;
+     color: var(--dark-red);
+ }
+
+footer {
+    text-align: center;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    background-color: var(--red-gray);
+    color: #fff;
+}
+
+/* footer {
+    position: fixed;
+    bottom: 0;
+    background-color: var(--red-gray);
+    color: #fff;
+    text-align: center;
+    width: 100%;
+    padding-top: 20px;
+    padding-bottom: 20px;
+} */

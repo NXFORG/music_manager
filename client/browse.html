@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Record Manager</title>
+    <script defer src="api.js"></script>
+    <script defer src="index.js"></script>
+    <script defer src="handlers.js"></script>
+    <link rel="stylesheet" href="./css/browse.css" type="text/css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300&display=swap" rel="stylesheet">
+</head>
+<body>
+    <nav>
+        <ul>
+            <li class="navLink"><a href="#"><b>Record Manager</b></a></li>
+            <li class="navLink" id="browseTab"><a href="#searchContent">Browse</a></li>
+            <li class="navLink" id="collTab"><a href="#collHeader">View</a></li>
+            <li class="navLink" id="manageTab"><a href="#manageHeader">Manage</a></li>
+        </ul>
+    </nav>
+    <article id="enterForm">
+        <section id="findArtist">
+            <article id="introText">
+                <h1>To get started, enter an artist or album name and select your music format in the form below.</h1>
+            </article>
+            <form>
+                <input id="searchQuery" type="text" placeholder="Enter artist/album name" required>
+                <select id="searchType" type="text" required>
+                    <option disabled selected>Please Select</option>
+                    <option value="Artist">Artist</option>
+                    <option value="Album/Single/Other">Album/Single/Other</option>
+                </select>
+                <select id="searchFormat" type="text" required>
+                    <option disabled selected>Please Select</option>
+                    <option value="Vinyl">Vinyl</option>
+                    <option value="CD">CD</option>
+                </select>
+                <input id="formSubmit" type="submit" value="Search">
+            </form>
+        </section>
+        <section id="vinylImg">
+            <img src="./src/record.jpg">
+        </section>
+    </article>
+    <header class="browsePageHeader">
+        <h2>Welcome</h2>
+    </header>  
+    <article id="welcomeSection">
+        <section>
+            <h3>1. Enter an artist or album name.</h3>
+            <p>In the artist and album name field on the form above, enter the name of an artist or album title you would like to search for.</p> 
+            <p>Underneath the title field is a dropdown for you to select your music format.</p>
+            <p>Click 'search' and then either scroll to the bottom of the page or click 'browse' in the page navigation bar to see your results.</p>
+        </section>
+        <section>
+            <h3>2. Select records to add to your collection.</h3>
+            <p>Click the three lines icon to view more information about a specific result, or click the plus icon to add the result to your collection. 
+            <p>When you're ready to view you collection, click 'show collection' underneath the displayed results.</p>
+        </section>
+        <section>
+            <h3>3. View or manage your collection.</h3>
+            <p>Click 'manage collection' to view and manage your saved items. You can also export your collection to a PDF or CSV.</p>
+        </section>
+    </article>
+    <section id="searchContent">
+        <header class="browsePageHeader">
+            <h2>Results</h2>
+        </header>  
+        <article id="resultsDisplay">
+        </article>
+        <div id="albumInfo" class="modal">
+            <div class="modalBody">
+                 <span class="close">&times;</span>
+                <ul id="modalText">
+                    <li id="relTitle"></li>
+                    <li id="relYear"></li>
+                    <li id="relGenre"></li>
+                    <li id="relLabel"></li>
+                </ul>
+                <div id="modalBtnContainer">
+                    <button class="addButton" id="modalAdd">Add to My Collection</button>
+                    <button class="detailsButton" id="modalView">View My Collection</button>
+                </div>
+            </div>
+        </div>
+        <header class="browsePageHeader" id="collHeader">
+            <button id="showCollection">Show Collection</button>
+        </header>
+        <section id="collectionDisplay">
+        </section>
+        <section id="tableFilters">
+            <table>
+                <tr>
+                    <td id="titleFilter"><button>Filter by Title</button></td>
+                    <td id="yearFilter"><button>Filter by Year</button></td>
+                    <td id="genreFilter"><button>Filter by Genre</button></td>
+                    <td id="ownerFilter"><button>Filter by Owners</button></td>
+                    <td id="demandFilter"><button>Filter by Demand</button></td>
+                    <td id="toTop"><button>Back to Top</button></td>
+                </tr>
+            </table>
+        </section>
+        <article id="showContainer">
+            <section id="albumDetails">
+                <h1 id="albumTitle"></h1>
+                <ul id="albumArtists"></ul>
+                <p id="albumYear"></p>
+                <p id="albumPrice"></p>
+                <p id="albumSales"></p>
+            </section>
+            <section id="notesContainer">
+                <h3>Release Notes:</h3>
+                <p id="albumNotes"></p>
+            </section>
+            <section id="albumTrackList">
+                <h3>Tracklist:</h3>
+                <ol id="albumTracks"></ol>
+            </section>
+        </article>
+    </section>
+    <header class="browsePageHeader" id="manageHeader">
+        <button id="showManageCollection">Manage Collection</button>
+    </header>
+    <article id="manageDisplay">
+        <section id="collStatistics">
+            <h3 id="collStatsTitle">Your Collection Statistics</h3>
+            <ul>
+                <li id="itemsOwned"></li>
+                <li id="collValue"></li>
+                <li id="favouriteGenre"></li>
+                <li id="uniqColl"></li>
+            </ul>
+        </section>
+        <section id="songSuggest">
+            <h3 id="suggestTitle">Today's Listening</h3>
+            <h4 id="showSong"></h4>
+        </section>
+        <section id="collActions">
+            <h3 id="actionsTitle">Your Collection Actions</h3>
+            <button id="printButtonPdf">Export to PDF</button>
+            <button id="printButtonCsv">Export to CSV</button>
+        </section>
+    </article>
+    <footer>
+        2021 Chris Anstead
+    </footer>
+</body>
+</html>
