@@ -45,7 +45,12 @@ nav > ul, #subNav > ul {
 .navLink{
     float:left;
 }
-  
+
+#signOut {
+    float: right;
+    border-left: 2px solid var(--dark-red);
+}
+
 .navLink a{
     display: block;
     padding: 20px;

@@ -21,7 +21,7 @@ router.post('/login', async (req, res) => {
         if(!user){ throw new Error('No user with this email') }
         const authed = await bcrypt.compare(req.body.pass, user.pass)
         if (!!authed){
-            res.status(200).json({ success: true })
+            res.status(200).json({ user: user.fname })
         } else {
             throw new Error('User could not be authenticated')  
         }

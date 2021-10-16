@@ -9,7 +9,8 @@ const regUser = async (fname, lname, email, pass) => {
             body: JSON.stringify({fname: fname, lname: lname, email: email, pass: pass}),
             headers: {"Content-type": "application/json; charset=UTF-8"}
         })
-        window.location.href = "./hello.html"
+        alert('Registration Successful')
+        location.reload;
     } catch(err) {
         console.log(err);
     }
@@ -23,11 +24,15 @@ const loginUser = async (email, pass) => {
             headers: {"Content-type": "application/json; charset=UTF-8"}
         });
         let jsonResponse = await response.json();
-        console.log(jsonResponse);
-        jsonResponse.success ? window.location.href = "hello.html" : alert('Please try again.')
+        jsonResponse.user ? enter(jsonResponse.user) : alert('Please try again.')
     } catch(err) {
         console.log(err);
     }
+}
+
+const enter = (user) => {
+    localStorage.setItem('username', user);
+    window.location.href = "./browse.html";
 }
 
 regForm.addEventListener('submit', e => {
@@ -45,4 +50,23 @@ loginForm.addEventListener('submit', e => {
     let email = loginForm.elements['emailLogin'].value;
     let pass = loginForm.elements['passLogin'].value;
     loginUser(email, pass);
+});
+
+const regBtn = document.getElementById('regBtn');
+const loginBtn = document.getElementById('loginBtn');
+const regTitle = document.getElementById('regTitle');
+const loginTitle = document.getElementById('loginTitle');
+
+regBtn.addEventListener('click', e => {
+    loginForm.style.display = 'none';
+    regForm.style.display = 'block';
+    regTitle.style.display = 'block';
+    loginTitle.style.display = 'none';
+});
+
+loginBtn.addEventListener('click', e => {
+    loginForm.style.display = 'block';
+    regForm.style.display = 'none';
+    loginTitle.style.display = 'block';
+    regTitle.style.display = 'none';
 });
