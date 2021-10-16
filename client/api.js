@@ -1,7 +1,7 @@
 //const server = require('./server');
 
 class Media {
-    constructor(title, artist, genre, year){
+    constructor(title, artist, year, genre){
         this.title = title;
         this.artist = artist;
         this.genre = genre;
@@ -10,40 +10,35 @@ class Media {
 }
 
 class Album extends Media {
-    constructor(id, relId, title, artist, year, genre, image, barcode, owners, label) {
+    constructor(id, relId, type, title, artist, year, genre, image, barcode, owners, label) {
+        super(title, artist, year, genre);
         this.id = id;
         this.relId = relId;
+        this.type = type;
         this.image = image;
         this.barcode = barcode;
         this.owners = owners;
         this.label = label;
-        super(title);
-        super(artist);
-        super(year);
-        super(genre);
     }
 }
 
 class Release extends Media {
     constructor(title, artist, year, genre, price, numForSale, notes, tracks){
+        super(title, artist, year, genre);
         this.price = price;
         this.forSale = numForSale;
         this.notes = notes;
         this.tracks = tracks;
-        super(title);
-        super(artist);
-        super(year);
-        super(genre);
     }
 }
 
-const getDiscogsAlbum = async(artist, format) => {
+const getDiscogsAlbum = async(artist, format, type) => {
 
     try {
         let response =  await fetch(`http://localhost:3000/albums/search/${artist}/${format}`);
         let jsonResponse = await response.json();
 
-        appendToObject(jsonResponse.output);
+        appendToObject(jsonResponse.output, type);
 
     } catch(error) {
         console.error("There was an error handling your request: " + error.message);
@@ -88,10 +83,11 @@ const moreInfo = async(masterId) => {
         }
 }
 
-let appendToObject = (apiOutput) => {
+let appendToObject = (apiOutput, type) => {
   for(albumRes in apiOutput){
     let outputData = apiOutput[albumRes]
     let outputId = outputData.master_id || outputData.id;
+    let outputType = type;
     let outputTitle = outputData.title;
     let outputArtist = outputData.artist || '';
     let outputYear = outputData.year;
@@ -100,7 +96,7 @@ let appendToObject = (apiOutput) => {
     let outputBarcode = outputData.barcode;
     let outputOwners = outputData.community;
     let outputLabel = outputData.label;
-    let newAlbum = new Album(parseInt(albumRes), outputId, outputTitle, outputArtist, outputYear, outputGenre, outputImage, outputBarcode, outputOwners, outputLabel);
+    let newAlbum = new Album(parseInt(albumRes), outputId, outputType, outputTitle, outputArtist, outputYear, outputGenre, outputImage, outputBarcode, outputOwners, outputLabel);
     apiResults.push(newAlbum);
   }
     displayResults();
