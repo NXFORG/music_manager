@@ -2,12 +2,12 @@ const dotenv = require('dotenv').config();
 const axios = require('axios');
 const express = require('express');
 const cors = require('cors');
+const router = express.Router();
 
-const app = express();
-app.use(express.json());
-app.use(cors());
+router.use(express.json());
+router.use(cors());
 
-app.get("/search/:query/:format", async (req, res) => {
+router.get("/search/:query/:format", async (req, res) => {
 	try {
 		const searchString = req.params.query;
 		const searchFormat = req.params.format;
@@ -32,7 +32,7 @@ app.get("/search/:query/:format", async (req, res) => {
 });
 
 //Route to get releases from an artist
-app.get("/artist/:name/:format", async (req, res) => {
+router.get("/artist/:name/:format", async (req, res) => {
 	try {
 		const searchArtist = req.params.name;
 		const searchArtistFormat = req.params.format;
@@ -58,7 +58,7 @@ app.get("/artist/:name/:format", async (req, res) => {
 	}
 });
 
-app.get("/release/:relid", async (req, res) => {
+router.get("/release/:relid", async (req, res) => {
 	try {
 		const searchRelease = req.params.relid;
 		const relResponse = await axios.get(`https://api.discogs.com/releases/${searchRelease}?GBP`);
@@ -76,7 +76,7 @@ app.get("/release/:relid", async (req, res) => {
 	}
 });
 
-app.get("/more/:master", async (req, res) => {
+router.get("/more/:master", async (req, res) => {
 	try {
 		const searchMaster = req.params.master;
         const moreInfoResponse = await axios.get(`https://api.discogs.com/masters/${searchMaster}`);
@@ -93,3 +93,5 @@ app.get("/more/:master", async (req, res) => {
 		});
 	}
 });
+
+module.exports = router
