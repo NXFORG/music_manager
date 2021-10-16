@@ -5,7 +5,7 @@
 }
 
 * {
-    font-family: 'Lato', sans-serif;
+    font-family: 'Quicksand', sans-serif;
     box-sizing: border-box;
 }
 
@@ -15,24 +15,42 @@ body {
 
 nav {
     background-color: var(--red-gray);
-    border-bottom: 20px solid var(--light-red-gray);
     position: fixed;
     top: 0;
     width: 100%;
 }
+
+#subNav {
+    background-color: var(--light-red-gray);
+    position: fixed;
+    top: 57px;
+    width: 100%;
+}
   
-nav > ul {
+nav > ul, #subNav > ul {
     overflow: hidden;
     list-style-type: none;
     margin: 0;
     padding: 0;
 }
 
+#subNav > ul > .navLink a{
+    display: block;
+    padding: 10px;
+    padding-left: 20px;
+    color: white;
+    text-decoration: none;
+}
+
 .navLink{
     float:left;
-    padding-right: 30px;
 }
-  
+
+#signOut {
+    float: right;
+    border-left: 2px solid var(--dark-red);
+}
+
 .navLink a{
     display: block;
     padding: 20px;
@@ -40,9 +58,12 @@ nav > ul {
     text-decoration: none;
 }
 
-.navLink a:hover, .navLink a:active {
+.navLink:hover, .navLink:active {
     background-color: #fff;
     transition: background-color 0.2s ease-in;
+}
+
+.navLink:hover > a, #subNav > ul .navLink:hover > a, .navLink:active > a, #subNav > ul .navLink:active > a {
     color: var(--red-gray);
 }
 
@@ -62,6 +83,7 @@ nav > ul {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     height: 250px;
+    margin-bottom: 100px;
 }
 
 #welcomeSection > section {
@@ -80,10 +102,10 @@ nav > ul {
 }
 
 #introText{
-    margin-top: 50px;
+    margin-top: 75px;
     padding-left: 50px;
     font-size: 1.5em;
-    width: 60%;
+    width: 80%;
 }
 
 #findArtist {
@@ -446,14 +468,3 @@ footer {
     background-color: var(--red-gray);
     color: #fff;
 }
-
-/* footer {
-    position: fixed;
-    bottom: 0;
-    background-color: var(--red-gray);
-    color: #fff;
-    text-align: center;
-    width: 100%;
-    padding-top: 20px;
-    padding-bottom: 20px;
-} */

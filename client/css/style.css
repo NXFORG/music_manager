@@ -1,16 +1,19 @@
+:root{
+    --red-gray: #1f1b1b;
+    --light-red-gray: #383232;
+    --mid-red: #5c2925;
+    --dark-red: #753e39;
+}
+
 * {
     box-sizing: border-box;
     font-family: 'Quicksand', sans-serif;
 }
 
-:root{
-    --red-gray: #1f1b1b;
-    --light-red-gray: #383232;
-    --dark-red: #753e39;
-}
-
 body {
     margin: 0;
+    background-image: url('../src/record.jpg');
+    background-size: cover;
 }
 
 nav {
@@ -51,6 +54,15 @@ h1 {
     margin-top: 100px;
 }
 
+article {
+    background-color: rgba(255, 255, 255, 0.8);
+    width: 60%;
+    margin-left: auto;
+    margin-right: auto;
+    padding-top: 50px;
+    padding-bottom: 50px;
+}
+
 main {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -61,23 +73,77 @@ main > section {
 }
 
 #regLoginBtnContainer {
-    width: 40%;
+    width: 50%;
     margin-left: auto;
     margin-right: auto;
     display: flex;
+    box-shadow: 2px 2px 5px gray;
 }
 
-#regLoginBtnContainer > button {
+#regBtn, #loginBtn {
+    padding: 20px;
     flex-basis: 50%;
+    background-color: #fff;
+    border: 0;
+    font-size: 1.2em;
+}
+
+#regBtn:hover, #loginBtn:hover {
+    background-color: var(--dark-red);
+    color: #fff;
+    cursor: pointer;
+}
+
+#regBtn:active, #loginBtn:active {
+    background-color: var(--light-red-gray);
+    color: #fff;
+    cursor: pointer;
+}
+
+#regBtn{
+    border-right: 2px solid var(--dark-red);
 }
 
 .formTitle {
     text-align: center;
+    margin-top: 50px;
 }
+
+#loginTitle, #loginForm{
+    display: none;
+}
+
+
 
 form > input {
     display: block;
     width: 100%;
     margin-bottom: 10px;
     padding: 10px;
+}
+
+#submitRegForm, #submitLoginForm {
+    background-color: var(--dark-red);
+    color: #fff;
+    border: 0;
+    font-size: 1.2em;
+}
+
+#submitRegForm:hover, #submitLoginForm:hover {
+    background-color: var(--mid-red);
+    cursor: pointer;
+}
+
+#submitRegForm:active, #submitLoginForm:active {
+    background-color: var(--light-red-gray);
+    cursor: pointer;
+}
+
+footer {
+    margin-top: 200px;
+    text-align: center;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    background-color: var(--red-gray);
+    color: #fff;
 }

@@ -7,34 +7,12 @@ let collection = [];
 
 let moreInfoResults;
 
-//Global variables for album values
-
-let id;
-let disId;
-let title;
-let genre;
-let year;
-let image;
-let barcode;
-let community;
-let label;
-
 //Set values = to specific album result data
 const displayResults = () => {
-    for(album of apiResults){
-        id = album.id;
-        disId = album.disId;
-        type = album.type;
-        title = album.title;
-        artist = album.artist;
-        genre = album.genre || [];
-        year = album.releaseYear;
-        image = album.image || '';
-        barcode = album.barcode || [];
-        community = album.community;
-        label = album.label || '';
+    console.log(apiResults[0])
+    for(album in apiResults){
         try {
-            type === 'Album/Single/Other' ? createAlbumListing(title, image, id) : createArtistListing(title, id, year, artist);
+            apiResults[album].type === 'Album/Single/Other' ? createAlbumListing(apiResults[album]) : createArtistListing(apiResults[album]);
         } catch(err) {
             console.log(`Error: ${err}`);
         }
@@ -42,7 +20,7 @@ const displayResults = () => {
 }
 
 //Display each listing on the DOM
-const createAlbumListing = (albumTitle, image, albumId) => {
+const createAlbumListing = (album) => {
     //Create each element for the listing
     let newListing = document.createElement('section');
     let newFigure = document.createElement('figure');
@@ -59,11 +37,11 @@ const createAlbumListing = (albumTitle, image, albumId) => {
     //Set button text
     addBtn.innerText = "+"; 
     detailsBtn.innerText = "☰";
-    newFigCaption.textContent = albumTitle;
-    if(albumTitle.length >= 18){
+    newFigCaption.textContent = album.title;
+    if(album.title.length >= 18){
         newFigCaption.setAttribute('class', 'longerTextSize');
     }
-    newFigImg.src = image || './src/vinyl.jpg';
+    newFigImg.src = album.image || './src/vinyl.jpg';
 
     //Append each listing to the DOM
     newFigure.appendChild(newFigImg); 
@@ -77,13 +55,13 @@ const createAlbumListing = (albumTitle, image, albumId) => {
     let closeModal = document.getElementsByClassName("close")[0];
 
     try {
-        eventListeners(addBtn, detailsBtn, closeModal, modal, albumId, albumTitle, genre, year, barcode, label);
+        eventListeners(addBtn, detailsBtn, closeModal, modal, album);
     } catch(err) {
         console.log(`Error: ${err}`);
     }
 }
 
-const createArtistListing = (albumTitle, albumId, albumYear, albumArtist) => {
+const createArtistListing = (album) => {
     let newListing = document.createElement('section');
     let albumHeader = document.createElement('h4');
     let albumDetailList = document.createElement('ul');
@@ -101,9 +79,9 @@ const createArtistListing = (albumTitle, albumId, albumYear, albumArtist) => {
 
     addBtn.innerText = "+"; 
     detailsBtn.innerText = "☰";
-    albumHeader.textContent = albumTitle;
-    albumDetailArtist.textContent = albumArtist;
-    albumDetailYear.textContent = albumYear;
+    albumHeader.textContent = album.title;
+    albumDetailArtist.textContent = album.artist;
+    albumDetailYear.textContent = album.year;
 
     if(albumTitle.length >= 18){
         albumHeader.setAttribute('class', 'longerTextSize');
@@ -122,7 +100,7 @@ const createArtistListing = (albumTitle, albumId, albumYear, albumArtist) => {
     document.getElementById('resultsDisplay').appendChild(newListing);
 
     try {
-        eventListeners(addBtn, detailsBtn, closeModal, modal, albumId, albumTitle, genre, year, barcode, label);
+        eventListeners(addBtn, detailsBtn, closeModal, modal, album);
     } catch(err) {
         console.log(`Error: ${err}`);
     }
@@ -133,31 +111,11 @@ const addAlbumToCollection = (idVal) => {
     alert('Item added to your collection');
 }
 
-const eventListeners = (addBtn, detailsBtn, closeModal, modal, albumId, albumTitle, genre="No  genre(s) found", year="No release year found", barcode="No barcode(s) found", label="No label(s) found") => {
+const eventListeners = (addBtn, detailsBtn, closeModal, modal, album) => {
 
     addBtn.addEventListener('click', e => {
-        addAlbumToCollection(albumId);
+        addAlbumToCollection(album.id);
     })
-   
-    /* detailsBtn.addEventListener('click', e => {
-        let modalList = document.getElementsByClassName('relBarcode');
-        while(modalList.length > 0){
-            document.getElementById('modalText').removeChild(modalList[0]);
-        }
-        modal.style.display = "block";
-        document.getElementById('relTitle').innerText = albumTitle;
-        document.getElementById('relYear').innerText = `Release year: ${year}`;
-        document.getElementById('relGenre').innerText = `Genre(s): ${genre}`;
-        for(code of barcode){
-            let barcodeDisplay = document.createElement('li');
-            barcodeDisplay.innerText = `Barcode: ${code}`;
-            barcodeDisplay.setAttribute('class', 'relBarcode');
-            document.getElementById('modalText').appendChild(barcodeDisplay);
-        }
-        document.getElementById('relLabel').innerText = `Label: ${label}`;
-        let modalAdd = document.getElementById('modalAdd');
-        modalAdd.setAttribute('value', albumId);
-    }) */
 
     detailsBtn.addEventListener('click', e => {
         let modalList = document.getElementsByClassName('relBarcode');
@@ -165,18 +123,18 @@ const eventListeners = (addBtn, detailsBtn, closeModal, modal, albumId, albumTit
             document.getElementById('modalText').removeChild(modalList[0]);
         }
         modal.style.display = "block";
-        document.getElementById('relTitle').innerText = albumTitle;
-        document.getElementById('relYear').innerText = `Release year: ${year}`;
-        document.getElementById('relGenre').innerText = `Genre(s): ${genre}`;
-        for(code of barcode){
+        document.getElementById('relTitle').innerText = album.title;
+        document.getElementById('relYear').innerText = `Release year: ${album.year}`;
+        document.getElementById('relGenre').innerText = `Genre(s): ${album.genre}`;
+        for(code of album.barcode){
             let barcodeDisplay = document.createElement('li');
             barcodeDisplay.innerText = `Barcode: ${code}`;
             barcodeDisplay.setAttribute('class', 'relBarcode');
             document.getElementById('modalText').appendChild(barcodeDisplay);
         }
-        document.getElementById('relLabel').innerText = `Label: ${label}`;
+        document.getElementById('relLabel').innerText = `Label: ${album.label}`;
         let modalAdd = document.getElementById('modalAdd');
-        modalAdd.setAttribute('value', albumId);
+        modalAdd.setAttribute('value', album.id);
     })
 
     closeModal.addEventListener('click', e => {
@@ -229,8 +187,8 @@ const showCollection = () => {
     tableHeaderRow.appendChild(communityWantHeader);
     tableHeaderRow.appendChild(moreInfoHeader);
     titleHeader.appendChild(titleHeaderVal);
-    genreHeader.appendChild(genreHeaderVal);
     yearHeader.appendChild(yearHeaderVal);
+    genreHeader.appendChild(genreHeaderVal);
     communityHaveHeader.appendChild(communityHaveHeaderVal);
     communityWantHeader.appendChild(communityWantHeaderVal);
     moreInfoHeader.appendChild(moreInfoHeaderVal)
@@ -238,8 +196,8 @@ const showCollection = () => {
     for(album of collection){
         let tableRow = document.createElement("tr");
         let titleField = document.createElement("td");
-        let genreField = document.createElement("td");
         let yearField = document.createElement("td");
+        let genreField = document.createElement("td");
         let communityHaveField = document.createElement("td");
         let communityWantField = document.createElement("td");
         let moreInfoField = document.createElement("td");
@@ -247,13 +205,13 @@ const showCollection = () => {
 
         communityHaveField.setAttribute('id', `haveField${album.id}`);
         communityWantField.setAttribute('id', `wantField${album.id}`);
-        moreInfoButton.setAttribute('value', album.disId);
+        moreInfoButton.setAttribute('value', album.relId);
 
-        let haveVal = parseInt(album.community.have);
-        let wantVal = parseInt(album.community.want);
+        let haveVal = parseInt(album.owners.have);
+        let wantVal = parseInt(album.owners.want);
 
         let titleVal = document.createTextNode(album.title);
-        let yearVal = document.createTextNode(album.releaseYear || "N/A");
+        let yearVal = document.createTextNode(album.year || "N/A");
         let genreVal = document.createTextNode(album.genre || "N/A");
         let communityHaveVal = document.createTextNode(haveVal) || "N/A";
         let communityWantVal = document.createTextNode(wantVal) || "N/A";
@@ -269,8 +227,8 @@ const showCollection = () => {
         tableRow.appendChild(communityWantField);
         tableRow.appendChild(moreInfoField);
         titleField.appendChild(titleVal);
-        genreField.appendChild(genreVal);
         yearField.appendChild(yearVal);
+        genreField.appendChild(genreVal);
         communityHaveField.appendChild(communityHaveVal);
         communityWantField.appendChild(communityWantVal);
         moreInfoField.appendChild(moreInfoButton);
@@ -389,12 +347,12 @@ genreFilter.addEventListener('click', e => {
 });
 
 ownerFilter.addEventListener('click', e => {
-    collection.sort((a, b) => a.community.have - b.community.have);
+    collection.sort((a, b) => a.owners.have - b.owners.have);
     showCollection();
 });
 
 demandFilter.addEventListener('click', e => {
-    collection.sort((a, b) => a.community.want - b.community.want);
+    collection.sort((a, b) => a.owners.want - b.owners.want);
     showCollection();
 });
 
@@ -417,7 +375,7 @@ showManage.addEventListener('click', e => {
         let totalValue = 0;
         for(album in collection){
             try {
-                foundAlbum = await moreInfo(collection[album].disId);
+                foundAlbum = await moreInfo(collection[album].relId);
                 foundAlbum.price ? totalValue += foundAlbum.price : totalValue += 0;
             } catch(err) {
                 console.log(`Error: ${err}`);
@@ -444,15 +402,15 @@ showManage.addEventListener('click', e => {
     }
     favouriteGenre.textContent = `Most common genre: ${find}, found ${totalOccurence} times.`;
 
-    ownerTotal = collection.map(collAlbum => collAlbum.community.have || 0).reduce((prev, next) => prev + next);
+    ownerTotal = collection.map(collAlbum => collAlbum.owners.have || 0).reduce((prev, next) => prev + next);
     uniqColl.textContent = `${(ownerTotal/collection.length).toFixed(0)} other collectors have similar items to you.`;
 
     const suggestASong = async () => {
         let allTracks = [];
         for(album in collection){
-            let foundAlbum = await moreInfo(collection[album].disId);
+            let foundAlbum = await moreInfo(collection[album].relId);
             foundAlbum.tracks.forEach(track => allTracks.push({
-                track: track.title, artist: foundAlbum.artists
+                track: track.title, artist: foundAlbum.artist
             })); 
         }
         songShuffler(allTracks);
@@ -475,7 +433,7 @@ printButtonPdf.addEventListener('click', e => {
     newWindow.document.write('<br>');
 
     for(album in collection){
-        newWindow.document.write(`Title: ${collection[album].title} Release year: ${collection[album].releaseYear} Genre: ${collection[album].genre.join(', ')}`);
+        newWindow.document.write(`Title: ${collection[album].title} Release year: ${collection[album].year} Genre: ${collection[album].genre.join(', ')}`);
         newWindow.document.write('<br>');
     }
 
@@ -488,7 +446,7 @@ printButtonCsv.addEventListener('click', e => {
     let csvContent = [];
     csvContent.push('Index', 'Artist/Title', 'Year', 'Genre', 'Label', 'Have', 'Want');
     for(album in collection){
-        csvContent.push(`${album} ${collection[album].title}, ${collection[album].releaseYear}, ${collection[album].genre[0]}, ${collection[album].label[0]}, ${collection[album].community.have}, ${collection[album].community.want}\n`);
+        csvContent.push(`${album} ${collection[album].title}, ${collection[album].year}, ${collection[album].genre[0]}, ${collection[album].label[0]}, ${collection[album].community.have}, ${collection[album].community.want}\n`);
     }
 
     let csvFile = 'data:text/csv;charset=utf-8,' + csvContent.join(', ');
@@ -502,52 +460,3 @@ printButtonCsv.addEventListener('click', e => {
     document.body.appendChild(download);
     download.click();
 });
-
-
-/* const albumManager = (albums) => {
-	if (albums) {
-		console.log('Your collection: ');
-		console.log('==========================================');
-		collectionFormat(albums).forEach(album => console.log(album));
-		console.log('==========================================');
-		const total = collectionValueCalculator(albums);
-		console.log(`Your collection is worth: £${total}`);
-		console.log('==========================================');
-		console.log("Today's listening: " + suggestASong(albums));
-	} else {
-		console.log('No collection provided');
-	}
-}
-
-const collectionFormat = albums => {
-	let formattedCollection = [];
-	for(album in albums){
-		formattedCollection.push(albums[album].title + " - " + albums[album].artist);
-	}
-	return formattedCollection;
-}
-
-const collectionValueCalculator = albums => {
-	let total = 0;
-	for(album in albums){
-		total += albums[album].value;
-	}
-	return total;
-}
-
-const suggestASong = albums => {
-	let allTracks = [];
-	for(album in albums){
-		albums[album].trackList.forEach(track => allTracks.push({
-			track: track, artist: albums[album].artist
-		}));
-	}
-	return songShuffler(allTracks);
-}
-
-const songShuffler = tracks => {
-	const index = Math.floor(Math.random() * tracks.length);
-	return tracks[index].track + " - " + tracks[index].artist;
-}
- */
-//albumManager(collection);
