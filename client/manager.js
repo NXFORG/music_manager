@@ -138,26 +138,6 @@ const eventListeners = (addBtn, detailsBtn, closeModal, modal, albumId, albumTit
     addBtn.addEventListener('click', e => {
         addAlbumToCollection(albumId);
     })
-   
-    /* detailsBtn.addEventListener('click', e => {
-        let modalList = document.getElementsByClassName('relBarcode');
-        while(modalList.length > 0){
-            document.getElementById('modalText').removeChild(modalList[0]);
-        }
-        modal.style.display = "block";
-        document.getElementById('relTitle').innerText = albumTitle;
-        document.getElementById('relYear').innerText = `Release year: ${year}`;
-        document.getElementById('relGenre').innerText = `Genre(s): ${genre}`;
-        for(code of barcode){
-            let barcodeDisplay = document.createElement('li');
-            barcodeDisplay.innerText = `Barcode: ${code}`;
-            barcodeDisplay.setAttribute('class', 'relBarcode');
-            document.getElementById('modalText').appendChild(barcodeDisplay);
-        }
-        document.getElementById('relLabel').innerText = `Label: ${label}`;
-        let modalAdd = document.getElementById('modalAdd');
-        modalAdd.setAttribute('value', albumId);
-    }) */
 
     detailsBtn.addEventListener('click', e => {
         let modalList = document.getElementsByClassName('relBarcode');
@@ -502,52 +482,3 @@ printButtonCsv.addEventListener('click', e => {
     document.body.appendChild(download);
     download.click();
 });
-
-
-/* const albumManager = (albums) => {
-	if (albums) {
-		console.log('Your collection: ');
-		console.log('==========================================');
-		collectionFormat(albums).forEach(album => console.log(album));
-		console.log('==========================================');
-		const total = collectionValueCalculator(albums);
-		console.log(`Your collection is worth: £${total}`);
-		console.log('==========================================');
-		console.log("Today's listening: " + suggestASong(albums));
-	} else {
-		console.log('No collection provided');
-	}
-}
-
-const collectionFormat = albums => {
-	let formattedCollection = [];
-	for(album in albums){
-		formattedCollection.push(albums[album].title + " - " + albums[album].artist);
-	}
-	return formattedCollection;
-}
-
-const collectionValueCalculator = albums => {
-	let total = 0;
-	for(album in albums){
-		total += albums[album].value;
-	}
-	return total;
-}
-
-const suggestASong = albums => {
-	let allTracks = [];
-	for(album in albums){
-		albums[album].trackList.forEach(track => allTracks.push({
-			track: track, artist: albums[album].artist
-		}));
-	}
-	return songShuffler(allTracks);
-}
-
-const songShuffler = tracks => {
-	const index = Math.floor(Math.random() * tracks.length);
-	return tracks[index].track + " - " + tracks[index].artist;
-}
- */
-//albumManager(collection);
