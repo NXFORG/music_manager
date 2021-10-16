@@ -205,7 +205,7 @@ const showCollection = () => {
 
         communityHaveField.setAttribute('id', `haveField${album.id}`);
         communityWantField.setAttribute('id', `wantField${album.id}`);
-        moreInfoButton.setAttribute('value', album.disId);
+        moreInfoButton.setAttribute('value', album.relId);
 
         let haveVal = parseInt(album.owners.have);
         let wantVal = parseInt(album.owners.want);
@@ -347,12 +347,12 @@ genreFilter.addEventListener('click', e => {
 });
 
 ownerFilter.addEventListener('click', e => {
-    collection.sort((a, b) => a.community.have - b.community.have);
+    collection.sort((a, b) => a.owners.have - b.owners.have);
     showCollection();
 });
 
 demandFilter.addEventListener('click', e => {
-    collection.sort((a, b) => a.community.want - b.community.want);
+    collection.sort((a, b) => a.owners.want - b.owners.want);
     showCollection();
 });
 
@@ -375,7 +375,7 @@ showManage.addEventListener('click', e => {
         let totalValue = 0;
         for(album in collection){
             try {
-                foundAlbum = await moreInfo(collection[album].disId);
+                foundAlbum = await moreInfo(collection[album].relId);
                 foundAlbum.price ? totalValue += foundAlbum.price : totalValue += 0;
             } catch(err) {
                 console.log(`Error: ${err}`);
@@ -402,15 +402,15 @@ showManage.addEventListener('click', e => {
     }
     favouriteGenre.textContent = `Most common genre: ${find}, found ${totalOccurence} times.`;
 
-    ownerTotal = collection.map(collAlbum => collAlbum.community.have || 0).reduce((prev, next) => prev + next);
+    ownerTotal = collection.map(collAlbum => collAlbum.owners.have || 0).reduce((prev, next) => prev + next);
     uniqColl.textContent = `${(ownerTotal/collection.length).toFixed(0)} other collectors have similar items to you.`;
 
     const suggestASong = async () => {
         let allTracks = [];
         for(album in collection){
-            let foundAlbum = await moreInfo(collection[album].disId);
+            let foundAlbum = await moreInfo(collection[album].relId);
             foundAlbum.tracks.forEach(track => allTracks.push({
-                track: track.title, artist: foundAlbum.artists
+                track: track.title, artist: foundAlbum.artist
             })); 
         }
         songShuffler(allTracks);
@@ -433,7 +433,7 @@ printButtonPdf.addEventListener('click', e => {
     newWindow.document.write('<br>');
 
     for(album in collection){
-        newWindow.document.write(`Title: ${collection[album].title} Release year: ${collection[album].releaseYear} Genre: ${collection[album].genre.join(', ')}`);
+        newWindow.document.write(`Title: ${collection[album].title} Release year: ${collection[album].year} Genre: ${collection[album].genre.join(', ')}`);
         newWindow.document.write('<br>');
     }
 
@@ -446,7 +446,7 @@ printButtonCsv.addEventListener('click', e => {
     let csvContent = [];
     csvContent.push('Index', 'Artist/Title', 'Year', 'Genre', 'Label', 'Have', 'Want');
     for(album in collection){
-        csvContent.push(`${album} ${collection[album].title}, ${collection[album].releaseYear}, ${collection[album].genre[0]}, ${collection[album].label[0]}, ${collection[album].community.have}, ${collection[album].community.want}\n`);
+        csvContent.push(`${album} ${collection[album].title}, ${collection[album].year}, ${collection[album].genre[0]}, ${collection[album].label[0]}, ${collection[album].community.have}, ${collection[album].community.want}\n`);
     }
 
     let csvFile = 'data:text/csv;charset=utf-8,' + csvContent.join(', ');
