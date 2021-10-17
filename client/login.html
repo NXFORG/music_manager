@@ -9,25 +9,26 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Quicksand&display=swap" rel="stylesheet">
     <script defer src="login.js"></script>
+    <script defer src="session.js"></script>
     <title>Login</title>
 </head>
-<body>
+<body id="loginBody">
     <nav>
-        <ul>
-            <li class="navLink"><a href="index.html"><b>Record Manager</b></a></li>
+        <ul id="navLinks">
+            <li class="navLink"><a href="index.html"><b>STYLUS</b></a></li>
             <li class="navLink"><a href="index.html">Home</a></li>
             <li class="navLink"><a href="login.html">Login</a></li>
         </ul>
     </nav>
-    <article>
-        <h1>Sign-up or Sign-in</h1>
+    <article id="loginContainer">
+        <h1 id="loginPageTitle">Sign-up or Sign-in</h1>
          <section id="regLoginBtnContainer">
             <button id="regBtn">Sign-up</button>
             <button id="loginBtn">Sign-in</button>
         </section>
         <h2 class="formTitle" id="regTitle">Welcome</h2>
         <h2 class="formTitle" id="loginTitle">Hello</h2>
-        <main>
+        <main id="loginFormContainer">
             <section>
                 <form id="registerForm">
                     <input id="fnameEntry" name="fname" placeholder="First Name" required/>

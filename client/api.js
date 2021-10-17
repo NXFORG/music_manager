@@ -1,5 +1,3 @@
-//const server = require('./server');
-
 class Media {
     constructor(title, artist, year, genre){
         this.title = title;
