@@ -10,7 +10,6 @@ const regUser = async (fname, lname, email, pass) => {
             headers: {"Content-type": "application/json; charset=UTF-8"}
         })
         alert('Registration Successful')
-        location.reload;
     } catch(err) {
         console.log(err);
     }
@@ -42,7 +41,12 @@ regForm.addEventListener('submit', e => {
     let email = regForm.elements['email'].value;
     let pass = regForm.elements['pass'].value;
     let passConfirm = regForm.elements['passConfirm'].value;
-    pass === passConfirm ? regUser(fname, lname, email, pass) : alert('Please check your both password fields match.')
+    if(pass === passConfirm){
+        regUser(fname, lname, email, pass);
+        window.location.reload();
+    } else {
+        alert('Please check both password fields match.')
+    }
 });
 
 loginForm.addEventListener('submit', e => {

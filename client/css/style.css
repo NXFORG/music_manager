@@ -10,7 +10,12 @@
     font-family: 'Quicksand', sans-serif;
 }
 
-body {
+#homeBody {
+    margin: 0;
+    background-color: lightgray;
+}
+
+#loginBody {
     margin: 0;
     background-image: url('../src/record.jpg');
     background-size: cover;
@@ -49,26 +54,62 @@ nav > ul {
     color: var(--red-gray);
 }
 
-h1 {
+#homeTitle {
+    margin-top: 100px;
+    margin-left: 50px;
+    font-size: 2em;
+}
+
+#homeTitle > span{
+    color: var(--dark-red);
+}
+
+#homeSubTitle, #introContent > h5 {
+    margin-left: 50px;
+}
+
+#introContent > h5 {
+    font-size: 1.1em;
+}
+
+a {
+    text-decoration: none;
+}
+
+#loginPageTitle {
     text-align: center;
     margin-top: 100px;
 }
 
-article {
+#introContainer {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    margin-top: 50px;
+    margin-bottom: 300px;
+    background-color: #fff;
+}
+
+#introContainer > img {
+    max-height: 400px;
+    justify-self: end;
+}
+
+#loginContainer {
     background-color: rgba(255, 255, 255, 0.8);
     width: 60%;
     margin-left: auto;
     margin-right: auto;
     padding-top: 50px;
     padding-bottom: 50px;
+    margin-bottom: 200px;
 }
 
-main {
+#loginFormContainer {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
 }
 
-main > section {
+#loginFormContainer > section {
     grid-column-start: 2;
 }
 
@@ -113,8 +154,6 @@ main > section {
     display: none;
 }
 
-
-
 form > input {
     display: block;
     width: 100%;
@@ -140,7 +179,6 @@ form > input {
 }
 
 footer {
-    margin-top: 200px;
     text-align: center;
     padding-top: 20px;
     padding-bottom: 20px;
