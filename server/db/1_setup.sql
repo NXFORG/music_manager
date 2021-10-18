@@ -7,3 +7,21 @@ CREATE TABLE users (
     email varchar(30) NOT NULL,
     pass varchar(300) NOT NULL
 );
+
+DROP TABLE IF EXISTS albumcollection;
+
+CREATE TABLE albumcollection (
+    id serial PRIMARY KEY,
+    ownerId int NOT NULL,
+    relId int NOT NULL,
+    relTitle varchar(20),
+    relArtist varchar(20),
+    relGenre varchar(50),
+    relYear int,
+    relType varchar(8) NOT NULL,
+    relImage varchar(100),
+    relBarcode varchar(500),
+    albumOwners varchar(200),
+    relLabel varchar(50)
+);
+

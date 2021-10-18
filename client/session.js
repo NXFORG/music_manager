@@ -23,7 +23,9 @@ if(localStorage.getItem('username')){
 
 const exit = document.getElementById('signOut');
 
-exit.addEventListener('click', e => {
-    localStorage.removeItem('username');
-    location.href = "./index.html";
-});
+if(exit){
+    exit.addEventListener('click', e => {
+        localStorage.removeItem('username');
+        location.href = "./index.html";
+    });
+}
