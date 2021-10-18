@@ -43,7 +43,7 @@ regForm.addEventListener('submit', e => {
     let passConfirm = regForm.elements['passConfirm'].value;
     if(pass === passConfirm){
         regUser(fname, lname, email, pass);
-        window.location.reload();
+        regForm.reset();
     } else {
         alert('Please check both password fields match.')
     }

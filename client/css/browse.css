@@ -46,7 +46,7 @@ nav > ul, #subNav > ul {
     float:left;
 }
 
-#signOut {
+#signOut, #user {
     float: right;
     border-left: 2px solid var(--dark-red);
 }

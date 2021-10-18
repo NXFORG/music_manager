@@ -2,12 +2,6 @@ if(!localStorage.getItem('username')){
     window.location.href = './login.html';
 }
 
-const exit = document.getElementById('signOut');
-exit.addEventListener('click', e => {
-    localStorage.removeItem('username');
-    location.href = "./index.html";
-});
-
 const form = document.getElementById('findArtist');
 const add = document.getElementById('addButton');
 

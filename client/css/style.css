@@ -38,7 +38,6 @@ nav > ul {
 
 .navLink{
     float:left;
-    padding-right: 30px;
 }
   
 .navLink a{
@@ -52,6 +51,11 @@ nav > ul {
     background-color: #fff;
     transition: background-color 0.2s ease-in;
     color: var(--red-gray);
+}
+
+#signOut, #user {
+    float: right;
+    border-left: 2px solid var(--dark-red);
 }
 
 #homeTitle {
@@ -85,7 +89,7 @@ a {
     display: grid;
     grid-template-columns: 1fr 1fr;
     margin-top: 50px;
-    margin-bottom: 300px;
+    margin-bottom: 500px;
     background-color: #fff;
 }
 
@@ -101,7 +105,7 @@ a {
     margin-right: auto;
     padding-top: 50px;
     padding-bottom: 50px;
-    margin-bottom: 200px;
+    margin-bottom: 350px;
 }
 
 #loginFormContainer {
