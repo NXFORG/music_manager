@@ -2,6 +2,7 @@ const dotenv = require('dotenv').config();
 const axios = require('axios');
 const express = require('express');
 const cors = require('cors');
+const { verifyToken } = require('../helpers/helpers');
 const router = express.Router();
 
 router.use(express.json());
@@ -10,7 +11,7 @@ router.use(cors());
 const User = require('../models/user');
 const Album = require('../models/album');
 
-router.get("/search/:query/:format", async (req, res) => {
+router.get("/search/:query/:format", verifyToken, async (req, res) => {
 	try {
 		const searchString = req.params.query;
 		const searchFormat = req.params.format;
@@ -97,9 +98,9 @@ router.get("/more/:master", async (req, res) => {
 	}
 });
 
-router.get('/collection/user/', async (req, res) => {
+router.get('/collection/:email', async (req, res) => {
 	try {
-		const user = await User.findByEmail(req.body.email);
+		const user = await User.findByEmail(req.params.email);
 		if(!user){ throw new Error('No user with this email')};
 		const userCollection = await Album.collection(user.id);
 
@@ -119,18 +120,52 @@ router.post('/collection/user/', async (req, res) => {
 	try {
 		const user = await User.findByEmail(req.body.email);
 		if(!user){ throw new Error('No user with this email')};
-		const newAlbum = await Album.add(user.id, {...req.body});
+		let newAlbum = await Album.add(user.id, {...req.body});
+
+		return res.json({
+            success: true,
+			output: newAlbum
+        }); 
+	} catch(err) {
+		return res.status(500).json({
+			success: false,
+			error_message: err.message
+		}); 
+	}
+});
+
+router.delete('/collection/user/:id', async (req, res) => {
+	try {
+		const user = await User.findByEmail(req.body.email);
+		if(!user){ throw new Error('No user with this email')};
+		await Album.deleteOne(user.id, req.params.id);
 
 		return res.json({
             success: true
         }); 
 	} catch(err) {
-		return res.status(404).json({
+		return res.status(500).json({
 			success: false,
 			error_message: err.message
 		});
 	}
 });
 
+router.delete('/collection/all', async (req, res) => {
+	try {
+		const user = await User.findByEmail(req.body.email);
+		if(!user){ throw new Error('No user with this email')};
+		await Album.deleteAll(user.id);
+
+		return res.json({
+            success: true
+        }); 
+	} catch(err) {
+		return res.status(500).json({
+			success: false,
+			error_message: err.message
+		});
+	}
+});
 
 module.exports = router

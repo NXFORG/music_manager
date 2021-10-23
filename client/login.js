@@ -2,19 +2,6 @@ let regForm = document.getElementById('registerForm');
 let loginForm = document.getElementById('loginForm');
 let regSubmit = document.getElementById('submitRegForm');
 
-const regUser = async (fname, lname, email, pass) => {
-    try {
-        await fetch(`http://localhost:3000/auth/register`, {
-            method: "POST",
-            body: JSON.stringify({fname: fname, lname: lname, email: email, pass: pass}),
-            headers: {"Content-type": "application/json; charset=UTF-8"}
-        })
-        alert('Registration Successful')
-    } catch(err) {
-        console.log(err);
-    }
-}
-
 const loginUser = async (email, pass) => {
     try {
         let response = await fetch(`http://localhost:3000/auth/login`, {
@@ -23,14 +10,31 @@ const loginUser = async (email, pass) => {
             headers: {"Content-type": "application/json; charset=UTF-8"}
         });
         let jsonResponse = await response.json();
-        jsonResponse.user ? enter(jsonResponse.user) : alert('Please try again.')
+        jsonResponse ? tryLogin(jsonResponse) : alert('Please try again.')
     } catch(err) {
         console.log(err);
     }
 }
 
-const enter = (user) => {
-    localStorage.setItem('username', user);
+const regUser = async (fname, lname, email, pass) => {
+    try {
+        await fetch(`http://localhost:3000/auth/register`, {
+            method: "POST",
+            body: JSON.stringify({fname: fname, lname: lname, email: email, pass: pass}),
+            headers: {"Content-type": "application/json; charset=UTF-8"}
+        })
+        alert('Registration Successful')
+        loginUser(email, pass)
+    } catch(err) {
+        console.log(err);
+    }
+}
+
+const tryLogin = (data) => {
+    const decodedToken = jwt_decode(data.token);
+    localStorage.setItem('username', decodedToken.user);
+    localStorage.setItem('email', decodedToken.email);
+    localStorage.setItem('token', data.token);
     window.location.href = "./browse.html";
 }
 

@@ -13,7 +13,8 @@ class Album {
         this.reltype = results.reltype
         this.relimage = results.relimage
         this.relbarcode = results.relbarcode
-        this.albumowners = results.albumowners
+        this.relhave = results.relhave
+        this.relwant = results.relwant
         this.rellabel = results.rellabel
     }
     static collection(ownerId) {
@@ -24,6 +25,40 @@ class Album {
                 res(coll);
             } catch (err) {
                 rej(`Error retrieving albums: ${err}`);
+            }
+        })
+    }
+
+    static add(id, { relid, reltitle, relartist, relgenre, relyear, reltype, relimage, relbarcode, relhave, relwant, rellabel }) {
+        return new Promise(async (res, rej) => {
+            try {
+                let newAlbum = await db.run(SQL`INSERT INTO albumcollection (ownerId, relId, relTitle, relArtist, relGenre, relYear, relType, relImage, relBarcode, relHave, relWant, relLabel) VALUES (${id}, ${relid}, ${reltitle}, ${relartist}, ${relgenre}, ${relyear}, ${reltype}, ${relimage}, ${relbarcode}, ${relhave}, ${relwant}, ${rellabel}) RETURNING *;`);
+                let album = new Album(newAlbum.rows[0]);
+                res(album);
+            } catch(err) {
+                rej(`Could not add album: ${err}`);
+            }
+        })
+    }
+
+    static deleteOne(userId, albumId){
+        return new Promise(async (res, rej) => {
+            try {
+                await db.run(SQL`DELETE FROM albumcollection WHERE ownerId = ${userId} AND relId = ${albumId};`);
+                res('Album deleted');
+            } catch(err) {
+                rej(`Could not delete album: ${err}`);
+            }
+        })
+    }
+
+    static deleteAll(userId){
+        return new Promise(async (res, rej) => {
+            try {
+                await db.run(SQL`DELETE FROM albumcollection WHERE ownerId = ${userId};`);
+                res('Albums deleted');
+            } catch(err) {
+                rej(`Could not delete album: ${err}`);
             }
         })
     }

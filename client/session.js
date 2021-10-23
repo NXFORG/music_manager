@@ -16,6 +16,7 @@ const loginLink = document.getElementById('loginLink');
 
 if(localStorage.getItem('username')){
     addTab('./browse.html', 'Manage');
+    addTab('./collection.html', 'My Collection');
     addTab('./index.html', 'Sign-out');
     addTab('', localStorage.getItem('username'));
     loginLink && navbar.removeChild(loginLink);
@@ -25,7 +26,7 @@ const exit = document.getElementById('signOut');
 
 if(exit){
     exit.addEventListener('click', e => {
-        localStorage.removeItem('username');
+        localStorage.clear();
         location.href = "./index.html";
     });
 }
