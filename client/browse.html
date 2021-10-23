@@ -8,6 +8,7 @@
     <script defer src="api.js"></script>
     <script defer src="manager.js"></script>
     <script defer src="handlers.js"></script>
+    <script defer src="session.js"></script>
     <link rel="stylesheet" href="./css/browse.css" type="text/css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -15,19 +16,15 @@
 </head>
 <body>
     <nav>
-        <ul>
+        <ul id="navLinks">
             <li class="navLink"><a href="index.html"><b>STYLUS</b></a></li>
             <li class="navLink"><a href="index.html">Home</a></li>
-            <li class="navLink"><a href="browse.html">Manage</a></li>
-            <li id="signOut" class="navLink"><a href="index.html">Sign-out</a></li>
         </ul>
     </nav>
     <section id="subNav">
         <ul>
             <li class="navLink"><a href="#">Back to Top</a></li>
             <li class="navLink" id="browseTab"><a href="#searchContent">Browse</a></li>
-            <li class="navLink" id="collTab"><a href="#collHeader">View</a></li>
-            <li class="navLink" id="manageTab"><a href="#manageHeader">Manage</a></li>
         </ul>
     </section>
     <article id="enterForm">
@@ -95,7 +92,7 @@
                 </div>
             </div>
         </div>
-        <header class="browsePageHeader" id="collHeader">
+        <!-- <header class="browsePageHeader" id="collHeader">
             <button id="showCollection">Show Collection</button>
         </header>
         <section id="collectionDisplay">
@@ -128,9 +125,9 @@
                 <h3>Tracklist:</h3>
                 <ol id="albumTracks"></ol>
             </section>
-        </article>
+        </article> -->
     </section>
-    <header class="browsePageHeader" id="manageHeader">
+    <!-- <header class="browsePageHeader" id="manageHeader">
         <button id="showManageCollection">Manage Collection</button>
     </header>
     <article id="manageDisplay">
@@ -152,7 +149,7 @@
             <button id="printButtonPdf">Export to PDF</button>
             <button id="printButtonCsv">Export to CSV</button>
         </section>
-    </article>
+    </article> -->
     <footer>
         2021 Chris Anstead
     </footer>

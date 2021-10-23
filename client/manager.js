@@ -2,14 +2,10 @@
 //Populated with results fetched from the server
 let apiResults = [];
 
-//Populated with results selected by the user
-let collection = [];
-
 let moreInfoResults;
 
 //Set values = to specific album result data
 const displayResults = () => {
-    console.log(apiResults[0])
     for(album in apiResults){
         try {
             apiResults[album].type === 'Album/Single/Other' ? createAlbumListing(apiResults[album]) : createArtistListing(apiResults[album]);
@@ -106,9 +102,14 @@ const createArtistListing = (album) => {
     }
 };
 
-const addAlbumToCollection = (idVal) => {
-    collection.push(apiResults[idVal]);
-    alert('Item added to your collection');
+const addAlbumToCollection = async (idVal) => {
+    try {
+        addToMyCollection(apiResults[idVal], localStorage.getItem('email'));
+        //collection.push(apiResults[idVal]);
+        alert('Item added to your collection');
+    } catch(err) {
+        console.log(err);
+    }
 }
 
 const eventListeners = (addBtn, detailsBtn, closeModal, modal, album) => {
@@ -149,314 +150,14 @@ const eventListeners = (addBtn, detailsBtn, closeModal, modal, album) => {
     
 }
 
-const showCollection = () => {
-    let filters = document.getElementById('tableFilters');
-    let parent = document.getElementById('collectionDisplay');
-    document.getElementById('showContainer').style.display = 'grid';
-    document.getElementById('manageHeader').style.display = 'block';
-    document.getElementById('manageTab').style.display = 'inline-block';
-    filters.style.display = 'block';
-    while(parent.firstChild){
-        parent.firstChild.remove()
-    }
-    let collDisplay = document.getElementById('collectionDisplay');
-
-    let collTable = document.createElement('table');
-    let tableHeaderRow = document.createElement("tr");
-    let titleHeader = document.createElement("td");
-    let genreHeader = document.createElement("td");
-    let yearHeader = document.createElement("td");
-    let communityHaveHeader = document.createElement("td");
-    let communityWantHeader = document.createElement("td");
-    let moreInfoHeader = document.createElement("td");
-
-    let titleHeaderVal = document.createTextNode("Title");
-    let yearHeaderVal = document.createTextNode("Release Year");
-    let genreHeaderVal = document.createTextNode("Genre(s)");
-    let communityHaveHeaderVal = document.createTextNode("Other Owners");
-    let communityWantHeaderVal = document.createTextNode("Demand");
-    let moreInfoHeaderVal = document.createTextNode("More Information");
-    tableHeaderRow.setAttribute('id', 'collTableHeader');
-    tableHeaderRow.style.color = "white";
-
-    collTable.appendChild(tableHeaderRow);
-    tableHeaderRow.appendChild(titleHeader);
-    tableHeaderRow.appendChild(yearHeader);
-    tableHeaderRow.appendChild(genreHeader);
-    tableHeaderRow.appendChild(communityHaveHeader);
-    tableHeaderRow.appendChild(communityWantHeader);
-    tableHeaderRow.appendChild(moreInfoHeader);
-    titleHeader.appendChild(titleHeaderVal);
-    yearHeader.appendChild(yearHeaderVal);
-    genreHeader.appendChild(genreHeaderVal);
-    communityHaveHeader.appendChild(communityHaveHeaderVal);
-    communityWantHeader.appendChild(communityWantHeaderVal);
-    moreInfoHeader.appendChild(moreInfoHeaderVal)
-
-    for(album of collection){
-        let tableRow = document.createElement("tr");
-        let titleField = document.createElement("td");
-        let yearField = document.createElement("td");
-        let genreField = document.createElement("td");
-        let communityHaveField = document.createElement("td");
-        let communityWantField = document.createElement("td");
-        let moreInfoField = document.createElement("td");
-        let moreInfoButton = document.createElement('button');
-
-        communityHaveField.setAttribute('id', `haveField${album.id}`);
-        communityWantField.setAttribute('id', `wantField${album.id}`);
-        moreInfoButton.setAttribute('value', album.relId);
-
-        let haveVal = parseInt(album.owners.have);
-        let wantVal = parseInt(album.owners.want);
-
-        let titleVal = document.createTextNode(album.title);
-        let yearVal = document.createTextNode(album.year || "N/A");
-        let genreVal = document.createTextNode(album.genre || "N/A");
-        let communityHaveVal = document.createTextNode(haveVal) || "N/A";
-        let communityWantVal = document.createTextNode(wantVal) || "N/A";
-        moreInfoButton.textContent = "View";
-
-        
-        collDisplay.appendChild(collTable);
-        collTable.appendChild(tableRow);
-        tableRow.appendChild(titleField);
-        tableRow.appendChild(yearField);
-        tableRow.appendChild(genreField);
-        tableRow.appendChild(communityHaveField);
-        tableRow.appendChild(communityWantField);
-        tableRow.appendChild(moreInfoField);
-        titleField.appendChild(titleVal);
-        yearField.appendChild(yearVal);
-        genreField.appendChild(genreVal);
-        communityHaveField.appendChild(communityHaveVal);
-        communityWantField.appendChild(communityWantVal);
-        moreInfoField.appendChild(moreInfoButton);
-
-        let haveFieldId = document.getElementById(`haveField${album.id}`);
-        let wantFieldId = document.getElementById(`wantField${album.id}`);
-
-        if(haveVal < 1000){
-            haveFieldId.style.color = "green";
-        } else if(haveVal < 5000){
-            haveFieldId.style.color = "orange";
-        } else {
-            haveFieldId.style.color = "red";
-        }
-
-        if(wantVal < 1000){
-            wantFieldId.style.color = "red";
-        } else if(wantVal < 5000){
-            wantFieldId.style.color = "orange";
-        } else {
-            wantFieldId.style.color = "green";
-        }
-
-        const moreInfoClicked = async (discogsId) => {
-            document.getElementById('albumDetails').style.display = 'block';
-            document.getElementById('notesContainer').style.display = 'block';
-            document.getElementById('albumTrackList').style.display = 'block';
-            let foundAlbum;
-            try {
-                foundAlbum = await moreInfo(discogsId);
-                console.log(foundAlbum);
-            } catch(err) {
-                console.log(`Error: ${err}`);
-            }
-
-            let displayTitle = document.getElementById('albumTitle');
-            let displayArtists = document.getElementById('albumArtists');
-            let displayYear = document.getElementById('albumYear');
-            let displayPrice = document.getElementById('albumPrice');
-            let displaySales = document.getElementById('albumSales');
-            let displayNotes = document.getElementById('albumNotes');
-            let displayTracks = document.getElementById('albumTracks');
-
-            while(displayArtists.firstChild){
-                displayArtists.firstChild.remove()
-            }
-
-            while(displayTracks.firstChild){
-                displayTracks.firstChild.remove()
-            }
-        
-            displayTitle.textContent = foundAlbum.title;
-            displayYear.textContent = `Originally released: ${foundAlbum.year || 'N/A'}`;
-            displayPrice.textContent = `Lowest price on Discogs: £${foundAlbum.price || 'N/A'}`;
-            displaySales.textContent = `Copies currently for sale on Discogs: ${foundAlbum.forSale || 'N/A'}`;
-            displayNotes.textContent = foundAlbum.notes || 'N/A';
-
-            if(foundAlbum.artists){
-                for(artist of foundAlbum.artists){
-                    let artistListing = document.createElement('li');
-                    artistListing.textContent = `Artist: ${artist.name}`;
-                    displayArtists.appendChild(artistListing);
-                }
-            }
-            
-            if(foundAlbum.tracks){
-                for(track of foundAlbum.tracks){
-                    let trackListing = document.createElement('li');
-                    trackListing.innerHTML = `Position: <span>${track.position || 'N/A'}</span> Title: <span>${track.title}</span> Duration: <span>${track.duration || 'N/A'}</span>`;
-                    displayTracks.appendChild(trackListing);
-                }
-            }
-        }
-
-        moreInfoButton.addEventListener('click', e => {
-            moreInfoClicked(moreInfoButton.value);
-        })
-    }
-}
-
 modalAdd.addEventListener('click', e => {
     addAlbumToCollection(modalAdd.value);
 });
 
-let showColl = document.getElementById('showCollection');
 let modalView = document.getElementById('modalView');
-let titleFilter = document.getElementById('titleFilter');
-let yearFilter = document.getElementById('yearFilter');
-let genreFilter = document.getElementById('genreFilter');
-let ownerFilter = document.getElementById('ownerFilter');
-let demandFilter = document.getElementById('demandFilter');
-let toTop = document.getElementById('toTop');
 
-showColl.addEventListener('click', e => {
-    showCollection();
-});
-
-modalView.addEventListener('click', e => {
+/* modalView.addEventListener('click', e => {
     showCollection();
     window.location.href = '#showContainer';
-});
+}); */
 
-titleFilter.addEventListener('click', e => {
-    collection.sort((a, b) => a.title.localeCompare(b.title));
-    showCollection();
-});
-
-yearFilter.addEventListener('click', e => {
-    collection.sort((a, b) => a.releaseYear - b.releaseYear);
-    showCollection();
-});
-
-genreFilter.addEventListener('click', e => {
-    collection.sort((a, b) => a.genre[0].localeCompare(b.genre[0]));
-    showCollection();
-});
-
-ownerFilter.addEventListener('click', e => {
-    collection.sort((a, b) => a.owners.have - b.owners.have);
-    showCollection();
-});
-
-demandFilter.addEventListener('click', e => {
-    collection.sort((a, b) => a.owners.want - b.owners.want);
-    showCollection();
-});
-
-toTop.addEventListener('click', e => {
-    window.location.href = '#';
-});
-
-let showManage = document.getElementById('showManageCollection');
-
-showManage.addEventListener('click', e => {
-    document.getElementById('manageDisplay').style.display = 'grid';
-
-    let itemsOwned = document.getElementById('itemsOwned');
-    let collValue = document.getElementById('collValue');
-    let favouriteGenre = document.getElementById('favouriteGenre');
-    let uniqColl = document.getElementById('uniqColl');
-    let randomSong = document.getElementById('showSong');
-
-    const calcCollectionValue = async () => {
-        let totalValue = 0;
-        for(album in collection){
-            try {
-                foundAlbum = await moreInfo(collection[album].relId);
-                foundAlbum.price ? totalValue += foundAlbum.price : totalValue += 0;
-            } catch(err) {
-                console.log(`Error: ${err}`);
-            }
-        }
-        collValue.innerHTML = `Minimum value: £<span>${totalValue.toFixed(2)}</span>`;
-    }
-
-    itemsOwned.innerHTML = `Your collection size is <span>${collection.length}</span> items`;
-    calcCollectionValue();
-
-    let totalOccurence = 1;
-    let occurence = 0;
-    let find;
-    for (let i = 0; i < collection.length; i++){
-        for (let j = i; j < collection.length; j++){
-                collection[i].genre[0] === collection[j].genre[0] && occurence++;
-                if (totalOccurence < occurence){
-                  totalOccurence = occurence; 
-                  find = collection[i].genre[0];
-                }
-        }
-        occurence = 0;
-    }
-    favouriteGenre.textContent = `Most common genre: ${find}, found ${totalOccurence} times.`;
-
-    ownerTotal = collection.map(collAlbum => collAlbum.owners.have || 0).reduce((prev, next) => prev + next);
-    uniqColl.textContent = `${(ownerTotal/collection.length).toFixed(0)} other collectors have similar items to you.`;
-
-    const suggestASong = async () => {
-        let allTracks = [];
-        for(album in collection){
-            let foundAlbum = await moreInfo(collection[album].relId);
-            foundAlbum.tracks.forEach(track => allTracks.push({
-                track: track.title, artist: foundAlbum.artist
-            })); 
-        }
-        songShuffler(allTracks);
-    }
-
-    const songShuffler = allTracks => {
-        console.log(allTracks);
-        const index = Math.floor(Math.random() * allTracks.length);
-        randomSong.textContent = 'A song from your collection: ' + allTracks[index].track + ' - ' + allTracks[index].artist[0].name;
-    }
-
-   suggestASong();
-
-});
-
-let printButtonPdf = document.getElementById('printButtonPdf');
-printButtonPdf.addEventListener('click', e => {
-    let newWindow = window.open('');
-    newWindow.document.write('My Collection');
-    newWindow.document.write('<br>');
-
-    for(album in collection){
-        newWindow.document.write(`Title: ${collection[album].title} Release year: ${collection[album].year} Genre: ${collection[album].genre.join(', ')}`);
-        newWindow.document.write('<br>');
-    }
-
-    newWindow.print();
-});
-
-let printButtonCsv = document.getElementById('printButtonCsv');
-printButtonCsv.addEventListener('click', e => {
-
-    let csvContent = [];
-    csvContent.push('Index', 'Artist/Title', 'Year', 'Genre', 'Label', 'Have', 'Want');
-    for(album in collection){
-        csvContent.push(`${album} ${collection[album].title}, ${collection[album].year}, ${collection[album].genre[0]}, ${collection[album].label[0]}, ${collection[album].community.have}, ${collection[album].community.want}\n`);
-    }
-
-    let csvFile = 'data:text/csv;charset=utf-8,' + csvContent.join(', ');
-    let csvEncode = encodeURI(csvFile);
-    let download = document.createElement('a');
-    let today = new Date();
-    let curDate = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate
-
-    download.setAttribute('href', csvEncode);
-    download.setAttribute('download', `record_collection_${curDate}.csv`);
-    document.body.appendChild(download);
-    download.click();
-});

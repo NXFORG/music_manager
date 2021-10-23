@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Record Manager</title>
+    <script defer src="api.js"></script>
+    <script defer src="collection.js"></script>
+    <script defer src="handlers.js"></script>
+    <script defer src="session.js"></script>
+    <link rel="stylesheet" href="./css/browse.css" type="text/css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand&display=swap" rel="stylesheet">
+</head>
+<body>
+    <nav>
+        <ul id="navLinks">
+            <li class="navLink"><a href="index.html"><b>STYLUS</b></a></li>
+            <li class="navLink"><a href="index.html">Home</a></li>
+        </ul>
+    </nav>
+    <section id="subNav">
+        <ul>
+            <li class="navLink"><a href="#">Back to Top</a></li>
+            <li class="navLink" id="collTab"><a href="#collHeader">View</a></li>
+            <li class="navLink" id="manageTab"><a href="#manageHeader">Manage</a></li>
+        </ul>
+    </section>
+    <article>
+        <section id="introContainer">
+            <div id="introContent">
+                <h1 id="collPageTitle">Your Collection</h1>
+                <h3 id="collSubTitle">View your collection statistics and actions below.</h3>
+            </div>
+        </section>
+    </article>
+    <section id="searchContent"> 
+        <header class="browsePageHeader" id="collHeader">
+            <button id="showCollection">Show Collection</button>
+        </header>
+        <section id="collectionDisplay">
+        </section>
+        <section id="tableFilters">
+            <table>
+                <tr>
+                    <td id="titleFilter"><button>Filter by Title</button></td>
+                    <td id="yearFilter"><button>Filter by Year</button></td>
+                    <td id="genreFilter"><button>Filter by Genre</button></td>
+                    <td id="ownerFilter"><button>Filter by Owners</button></td>
+                    <td id="demandFilter"><button>Filter by Demand</button></td>
+                    <td id="toTop"><button>Back to Top</button></td>
+                </tr>
+            </table>
+        </section>
+        <article id="showContainer">
+            <section id="albumDetails">
+                <h1 id="albumTitle"></h1>
+                <ul id="albumArtists"></ul>
+                <p id="albumYear"></p>
+                <p id="albumPrice"></p>
+                <p id="albumSales"></p>
+            </section>
+            <section id="notesContainer">
+                <h3>Release Notes:</h3>
+                <p id="albumNotes"></p>
+            </section>
+            <section id="albumTrackList">
+                <h3>Tracklist:</h3>
+                <ol id="albumTracks"></ol>
+            </section>
+        </article>
+    </section>
+    <header class="browsePageHeader" id="manageHeader">
+        <button id="showManageCollection">Manage Collection</button>
+    </header>
+    <article id="manageDisplay">
+        <section id="collStatistics">
+            <h3 id="collStatsTitle">Your Collection Statistics</h3>
+            <ul>
+                <li id="itemsOwned"></li>
+                <li id="collValue"></li>
+                <li id="favouriteGenre"></li>
+                <li id="uniqColl"></li>
+            </ul>
+        </section>
+        <section id="songSuggest">
+            <h3 id="suggestTitle">Today's Listening</h3>
+            <h4 id="showSong"></h4>
+        </section>
+        <section id="collActions">
+            <h3 id="actionsTitle">Your Collection Actions</h3>
+            <button id="printButtonPdf">Export to PDF</button>
+            <button id="printButtonCsv">Export to CSV</button>
+        </section>
+    </article>
+    <footer>
+        2021 Chris Anstead
+    </footer>
+</body>
+</html>

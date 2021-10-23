@@ -11,6 +11,7 @@
 
 body {
     margin: 0;
+    background-color: lightgray;
 }
 
 nav {
@@ -46,7 +47,7 @@ nav > ul, #subNav > ul {
     float:left;
 }
 
-#signOut {
+#signOut, #user {
     float: right;
     border-left: 2px solid var(--dark-red);
 }
@@ -67,8 +68,31 @@ nav > ul, #subNav > ul {
     color: var(--red-gray);
 }
 
-#browseTab, #collTab, #manageTab, #searchContent {
-    display: none;
+#introContainer {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    margin-top: 50px;
+    padding-bottom: 50px;
+    background-color: #fff;
+}
+
+#introContainer > img {
+    max-height: 400px;
+    justify-self: end;
+}
+
+#collPageTitle {
+    margin-top: 100px;
+    margin-left: 50px;
+    font-size: 2em;
+}
+
+#collPAgeTitle > span {
+    color: var(--dark-red);
+}
+
+#collSubTitle, #introContent > h5 {
+    margin-left: 50px;
 }
 
 #enterForm {
@@ -422,6 +446,7 @@ td {
 #manageDisplay {
     display: none;
     grid-template-columns: 1fr 1fr 1fr;
+    margin-bottom: 100px;
 }
 
 #manageDisplay > section {
@@ -462,6 +487,9 @@ td {
  }
 
 footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
     text-align: center;
     padding-top: 20px;
     padding-bottom: 20px;
